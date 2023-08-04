@@ -13,8 +13,8 @@
             return;
         } 
         
-            http_response_code(201);
-            $classes = $data;
-            echo json_encode($classes);
+        http_response_code(201);
+        $classes = $data;
+        echo json_encode($classes);
     }
 ?>
