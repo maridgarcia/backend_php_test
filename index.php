@@ -1,13 +1,27 @@
 <?php
-require("classes.php");
+    require("classes.php");
+    require("booking.php");
 
 
-$method = $_SERVER["REQUEST_METHOD"];
-$path = $_SERVER["PATH_INFO"];
+    $method = $_SERVER["REQUEST_METHOD"];
+    $path = $_SERVER["PATH_INFO"];
 
-if($path === "/classes") {
-    createClasses();
-} else {
-    echo json_encode(["error" => "Path Not Found"]);
-}
+    switch ($path) {
+        case '/classes':
+            createClasses();
+            break;
+        case '/bookings':
+            bookClass();
+            break;
+        
+        default:
+            pageNotFound();
+            break;
+    }
+
+    function pageNotFound() {
+        http_response_code(404);
+        echo json_encode(["error" => "Page not found"]);
+    }
+
 ?>
