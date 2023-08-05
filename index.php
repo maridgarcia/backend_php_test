@@ -8,7 +8,11 @@
 
     switch ($path) {
         case '/classes':
-            createClasses();
+            if ($method === 'POST') {
+                createClasses();
+            } else {
+                respondNotFound();
+            }
             break;
         case '/bookings':
             bookClass();
