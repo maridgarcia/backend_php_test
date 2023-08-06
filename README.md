@@ -1,4 +1,3 @@
-
 # Glofox Task: Back-end
 
 Glofox is a saas platform for boutiques, studios, and gyms which allows business owners to manage
@@ -43,17 +42,67 @@ capacity of 20 , but the number of bookings can be greater than 20.
 ## Installing
 - Clone the project and go into it's repository: 
 ```
-git clone https://github.com/maridgarcia/backend_php_test.git
-cd backend_php_test
+$ git clone https://github.com/maridgarcia/backend_php_test.git
+$ cd backend_php_test
 ```
 
 ## Running
-- Inside the repository, in the command line run ``php -S localhost:8000`` to start the server. 
+- Inside the project, go into the "src" repository and in the command line run ``php -S localhost:8000`` to start the server. 
 You can test the routes using softwares like [Postman](https://www.postman.com/) or [Insomnia](https://insomnia.rest/), or you can send your request via command line as well. For example, if you want to create a class, you can send this request:
 
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"class_name":"Pilates","start_date":"2023-12-01","end_date":"2023-12-20","capacity":10}' http://localhost:8000/classes
+$ curl -X POST -H "Content-Type: application/json" -d '{"class_name":"Pilates","start_date":"2023-12-01","end_date":"2023-12-20","capacity":10}' http://localhost:8000/classes
 ```
 
 ## Testing the routes:
-There are two routes in this project: ``/classes`` and ``/bookings`` 
+There are two routes in this project: ``/classes`` and ``/bookings``
+
+## ``/classes``
+### GET
+Once your server is running, navigate to the "http://localhost:8000/classes". Using the HTTP method __GET__, you receive all the saved classes, or an empty array if no classes have been created yet.
+
+### POST
+To create a new class, you must send an object in the request body. The object should be like this:
+```
+{
+    "class_name": "Yoga",
+    "start_date": "2023-08-06",
+    "end_date": "2023-08-26",
+    "capacity": 10,
+    "bookings": 0
+}
+```
+_Note: the ``bookings`` field is required, and it has to start with 0._
+
+If all the required fields are provided, you will receive a 201 - Created response.
+
+If one of the fields is not provided, you will receive a 400 - Bad request error with the message "``{"error": "Check your payload. All fields are required!}"``"
+
+## ``/bookings``
+
+### POST
+To book a class, you must send an object in the body request. The object should look like this:
+
+```
+{
+    "class_name": "Yoga",
+    "date": "2023-08-06",
+    "name": "John Doe"
+}
+```
+_Note: All fields are required._
+
+You must send this object via http://localhost:8000/bookings URL, and it will return a 201 - Created response. Additionally, once you have completed the booking process, you will notice that the "bookings" field in the "classes" has increased by 1.
+
+## Tests
+In this project, I used PHPUnit and GuzzleHttp to write the tests.
+You can run the tests by going into the "tests" repository and running the following command in the command line:
+```
+$ phpunit tests/CreateClassTest.php
+or
+$ phpunit tests/CreateBookingTest.php
+```
+
+### Technologies Used in This Project
+
+![PHP](https://img.shields.io/badge/-PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
