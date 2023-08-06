@@ -2,7 +2,6 @@
     require("classes.php");
     require("booking.php");
 
-
     $method = $_SERVER["REQUEST_METHOD"];
     $path = $_SERVER["PATH_INFO"];
 
@@ -10,14 +9,20 @@
         case '/classes':
             if ($method === 'POST') {
                 createClasses();
+            } else if($method === 'GET') {
+                getAll();
             } else {
                 respondNotFound();
             }
             break;
         case '/bookings':
-            bookClass();
+            if ($method === 'POST') {
+                bookClass();
+            } else {
+                respondNotFound();
+            }
             break;
-        
+
         default:
             pageNotFound();
             break;
