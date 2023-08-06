@@ -31,7 +31,7 @@
             $_SESSION['classes'] = $classes;
             $_SESSION['booked_classes'] = $allBookedClasses;
 
-            http_response_code(200);
+            http_response_code(201);
             echo json_encode(["message" => "Class booked successfully"]);
             echo json_encode($allBookedClasses);
         } else {
